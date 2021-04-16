@@ -4,57 +4,66 @@
  * Define Global Variables
  * 
 */
-const list = ["Home", "service", "About", "contact"];
-const link = ["#sectionLink1", "#sectionLink2", "#sectionLink3", "#sectionLink4"];
-const container = document.querySelector(".navbar__menu");
-const ul = document.querySelector("#navbar__list");
-const section= document.querySelectorAll("section");
+const ul = document.querySelector("ul");
+const fragment = document.createDocumentFragment();
+const sections = document.querySelectorAll("section");
+const dataNavs = document.querySelectorAll("[data-nav]");
 
-// logo
-const logo = document.createElement("div");
-logo.textContent ="LOGO";
-logo.setAttribute("class", "logo")
-container.appendChild(logo);
+/**
+ * Anchor Click and section scroll helper function
+ * 
+*/
+function anchorScroll(itemClick, ItemScroll) {
+  itemClick.addEventListener("click", (e)=>{
+    e.preventDefault();
+    ItemScroll.scrollIntoView({ behavior: "smooth"});
+  })
+}
 
-// main functionalities
-function navElem() {
-  const fragment = document.createDocumentFragment();
-
-  // check if browser is internet explorer
-  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
-
-  // build the nav
-  for (let i = 0; i < list.length; i++) {
-  const li = document.createElement("li");
-   const a =  document.createElement("a")
-   a.textContent = list[i];
-   a.classList.add("menu__link")
-   a.setAttribute("href", link[i] )
-
-  //  click event
-   a.addEventListener("click", ()=>{
-     section.forEach((item) =>{
-     item.classList.contains("your-active-class")? item.classList.remove("your-active-class"): item.className = "your-active-class";
-     })
-     let hRef = a.href.split('#sectionLink');
-     hRef = "#section" + hRef[1]
-
-  // scroll effect
-     if (isIE11) {
-      window.scrollTo(0, document.querySelector(ref).offsetTop);
-    } else {
-      window.scroll({
-        behavior: 'smooth',
-        left: 0,
-        // top is the distance from the top of the page to the target element
-        top: document.querySelector(hRef).offsetTop
-      });
-    }
-   })
-   
-   li.appendChild(a);
-   fragment.appendChild(li)
+/**
+ * Document fragment for creating and appending nav Items
+ * 
+*/
+function menu() {
+  for(const section of sections) {
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.textContent = section.id;
+    a.classList.add("menu__link")   
+    li.appendChild(a);
+    anchorScroll(li, section) 
+    fragment.append(li)
   }
   return fragment
 }
-ul.append(navElem());
+ul.append(menu());
+
+/**
+ * In the viewport detection helper function for adding the active class 
+ * 
+*/
+function isInViewport() {
+  sections.forEach(element => {
+  let rect = element.getBoundingClientRect();  
+  return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+  })
+}
+
+/**
+ * Adding the active effect
+ * 
+*/
+function checkActive() {
+  sections.forEach(element => {
+  if (isInViewport) {
+    element.classList.contains("your-active-class")? element.classList.remove("your-active-class"): element.className = "your-active-class"; 
+  }
+})
+}
+// Window scroll event listener
+ window.addEventListener('scroll', checkActive);
