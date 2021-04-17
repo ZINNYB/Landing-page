@@ -42,7 +42,8 @@ ul.append(menu());
  * In the viewport detection helper function for adding the active class 
  * 
 */
-function isInViewport(element) {
+function isInViewport() {
+  sections.forEach(element => {
   let rect = element.getBoundingClientRect();  
   return (
       rect.top >= 0 &&
@@ -50,6 +51,7 @@ function isInViewport(element) {
       rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
+  })
 }
 
 /**
@@ -58,12 +60,8 @@ function isInViewport(element) {
 */
 function checkActive() {
   sections.forEach(element => {
-    element.classList.remove("your-active-class"); 
-})
-
-sections.forEach(element=>{
-  if(isInViewport(element)){
-  element.classList.add("your-active-class");
+  if (isInViewport) {
+    element.classList.contains("your-active-class")? element.classList.remove("your-active-class"): element.className = "your-active-class"; 
   }
 })
 }
