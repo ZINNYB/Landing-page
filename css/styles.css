@@ -79,6 +79,8 @@ section {
     padding-left: 0;
     margin: 0;
     text-align: right;
+    display: flex;
+    flex-wrap: wrap
 }
 
 .navbar__menu li {
@@ -187,6 +189,12 @@ img {
 .services-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+video {
+    width: 100%;
+    height: 100%;
 }
 
 /* section 4 */
@@ -203,7 +211,7 @@ img {
 
 .testimony-content .author {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 }
 
 .testimony-content .author img {
@@ -355,5 +363,59 @@ section.your-active-class .landing__container::after {
 
     to {
         transform: rotate(360deg) translate(-1em) rotate(-360deg);
+    }
+}
+
+/* Responsive design */
+
+@media only screen and (max-width: 900px) {
+
+    h2 {
+        font-size: 2.5em;
+    }
+
+    .title-area {
+        grid-template-columns: 1fr;
+    }
+
+    .title-area h3 {
+        text-align: center;
+        width: 100%;
+    }
+
+    .title-area p {
+        display: none;
+    }
+
+    .sKill-container {
+        grid-template-columns: 1fr;
+    }
+
+    .services-container {
+        grid-template-columns: 1fr;
+    }
+
+    .testimony-container {
+        grid-template-columns: 1fr;
+    }
+
+    .testimony-content .author div {
+        margin-right: 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    .galary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    h1 {
+        font-size: 2.5em;
+        margin: 4em 0 1rem;
+    }
+
+    h2 {
+        font-size: 2em;
     }
 }
