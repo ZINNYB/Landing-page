@@ -29,10 +29,10 @@ function menu() {
     const li = document.createElement("li");
     const a = document.createElement("a");
     a.textContent = section.id;
-    a.classList.add("menu__link")   
+    a.classList.add("menu__link");  
     li.appendChild(a);
-    anchorScroll(li, section) 
-    fragment.append(li)
+    anchorScroll(li, section);
+    fragment.append(li);
   }
   return fragment
 }
@@ -42,28 +42,33 @@ ul.append(menu());
  * In the viewport detection helper function for adding the active class 
  * 
 */
-function isInViewport() {
-  sections.forEach(element => {
+function isInViewport(element) {
   let rect = element.getBoundingClientRect();  
   return (
       rect.top >= 0 &&
       rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
-  })
 }
+
 
 /**
  * Adding the active effect
  * 
 */
 function checkActive() {
-  sections.forEach(element => {
-  if (isInViewport) {
-    element.classList.contains("your-active-class")? element.classList.remove("your-active-class"): element.className = "your-active-class"; 
+  sections.classList.remove("your-active-class");
+
+  sections.forEach(element => { 
+     
+  if (isInViewport(element)) {
+    element.className = "your-active-class";
+  }
+  else if(!(isInViewport(element))){
+    element.classList.remove("your-active-class");
   }
 })
 }
-// Window scroll event listener
+
+// // Window scroll event listener
  window.addEventListener('scroll', checkActive);
